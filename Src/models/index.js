@@ -4,7 +4,6 @@ import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath, pathToFileURL } from "url";
 import process from "process";
 
-// --- Sửa tại đây ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -13,22 +12,20 @@ const configPath = path.join(__dirname, "..", "config", "config.json");
 const configJSON = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 const config = configJSON[env];
 
-// --- Phần còn lại giữ nguyên ---
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: "mysql",
+    logging: false,
+  }
+);
 
-// Load models tự động
 const files = fs.readdirSync(__dirname).filter((file) => {
   return (
     file.indexOf(".") !== 0 &&
