@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import CORSconfig from "./Src/Config/CORSsetting.js";
+import CORSconfig from "./Src/config/corssetting.js";
 import cors from "cors";
 import { connect } from "@ngrok/ngrok";
 import InitApiRoute from "./Src/Services/Routes/InitApiRoute.js";
