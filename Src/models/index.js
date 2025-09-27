@@ -3,14 +3,17 @@ import path from "path";
 import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath, pathToFileURL } from "url";
 import process from "process";
-import configJSON from "../config/config.json" assert { type: "json" };
 
+// --- Sửa tại đây ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const env = process.env.NODE_ENV || "development";
+const configPath = path.join(__dirname, "..", "config", "config.json");
+const configJSON = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 const config = configJSON[env];
 
+// --- Phần còn lại giữ nguyên ---
 const db = {};
 
 let sequelize;
@@ -25,6 +28,7 @@ if (config.use_env_variable) {
   );
 }
 
+// Load models tự động
 const files = fs.readdirSync(__dirname).filter((file) => {
   return (
     file.indexOf(".") !== 0 &&
