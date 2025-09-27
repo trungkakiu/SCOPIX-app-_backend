@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import CORSconfig from "./Src/config/corssetting.js";
 import cors from "cors";
-import { connect } from "@ngrok/ngrok";
 import InitApiRoute from "./Src/Services/Routes/InitApiRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -81,14 +80,6 @@ async function startServer() {
 
     server.listen(PORT, "0.0.0.0", async () => {
       console.log(`Server đang chạy tại http://0.0.0.0:${PORT}`);
-
-      const tunnel = await connect({
-        addr: PORT,
-        authtoken: process.env.NGROK_AUTH_TOKEN,
-        subdomain: process.env.NGROK_SUBDOMAIN,
-      });
-
-      console.log(`Ngrok đang online tại: ${tunnel.url()}`);
     });
   } catch (error) {
     console.error("Lỗi kết nối DB:", error.message);
