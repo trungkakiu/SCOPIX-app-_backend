@@ -1,4 +1,4 @@
-import db from "../../Models/index.js";
+import db from "../../models/index.js";
 
 const getAllframe = async (req, res) => {
   try {
